@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Empresa de transportes de pasajeros y encomiendas en Perú. Rutas: Cajamarca - Tarapoto, Tarapoto - Chiclayo, Chota - Chiclayo." />
+  <title>TransAndino | Transportes de Pasajeros y Encomiendas</title>
+
+  <!-- Fuentes: Bebas Neue (display) + Nunito (cuerpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons (CDN) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ======================================================
+       HEADER / NAVBAR
+  ====================================================== -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <span class="logo-icon"><i data-lucide="bus"></i></span>
+        <div class="logo-text">
+          <span class="logo-brand">TransAndino</span>
+          <span class="logo-tagline">Perú</span>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="#rutas">Rutas</a>
+        <a href="#contacto">Oficinas</a>
+        <a href="#encomiendas">Encomiendas</a>
+        <a href="#nosotros">Nosotros</a>
+      </nav>
+      <button class="nav-cta" onclick="scrollToSection('contacto')">
+        <i data-lucide="message-circle"></i> Contactar
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <!-- Menú móvil -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#rutas" onclick="closeMobileMenu()">Rutas</a>
+      <a href="#contacto" onclick="closeMobileMenu()">Oficinas</a>
+      <a href="#encomiendas" onclick="closeMobileMenu()">Encomiendas</a>
+      <a href="#nosotros" onclick="closeMobileMenu()">Nosotros</a>
+    </div>
+  </header>
+
+  <!-- ======================================================
+       HERO SECTION — Video de fondo + CTA principal
+  ====================================================== -->
+  <section class="hero" id="inicio">
+    <!-- Video de fondo (reemplaza con tu archivo Videos/fondo.mp4) -->
+    <div class="hero-video-wrapper">
+      <video autoplay muted loop playsinline class="hero-video" id="heroBgVideo">
+        <source src="Videos/fondo.mp4" type="video/mp4" />
+      </video>
+      <!-- Fallback si no hay video: imagen de fondo -->
+      <div class="hero-img-fallback"></div>
+      <div class="hero-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i data-lucide="shield-check"></i>
+        Servicio confiable desde el corazón de los Andes
+      </div>
+      <h1 class="hero-title">
+        Viaja Seguro.<br />
+        <span class="hero-accent">Llega Puntual.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Conectamos Cajamarca, Tarapoto, Chiclayo y más de 10 ciudades del norte del Perú.
+        Pasajeros y encomiendas con el mejor servicio.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="scrollToSection('contacto')">
+          <i data-lucide="map-pin"></i> Ver Rutas y Oficinas
+        </button>
+        <button class="btn-secondary" onclick="scrollToSection('encomiendas')">
+          <i data-lucide="package"></i> Enviar Encomienda
+        </button>
+      </div>
+      <!-- Estadísticas rápidas -->
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">14+</span>
+          <span class="stat-label">Oficinas</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Rutas Principales</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">24/7</span>
+          <span class="stat-label">Atención</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flecha de scroll -->
+    <div class="hero-scroll-hint">
+      <i data-lucide="chevrons-down"></i>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       SECCIÓN: SELECTOR DE RUTAS
+  ====================================================== -->
+  <section class="rutas-section" id="rutas">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label"><i data-lucide="route"></i> Nuestras Rutas</span>
+        <h2 class="section-title">¿A dónde viajas?</h2>
+        <p class="section-subtitle">Selecciona tu ciudad de salida y llegada para ver la oficina de contacto.</p>
+      </div>
+
+      <!-- Botones de ruta principal -->
+      <div class="route-tabs" id="routeTabs">
+        <button class="route-tab active" data-route="cajamarca-tarapoto">
+          <i data-lucide="navigation"></i>
+          <span class="tab-main">Cajamarca → Tarapoto</span>
+          <span class="tab-sub">Vía Chota · Bagua · Pedro Ruiz</span>
+        </button>
+        <button class="route-tab" data-route="tarapoto-chiclayo">
+          <i data-lucide="navigation"></i>
+          <span class="tab-main">Tarapoto → Chiclayo</span>
+          <span class="tab-sub">Vía Moyobamba · Rioja · Bagua</span>
+        </button>
+        <button class="route-tab" data-route="chota-chiclayo">
+          <i data-lucide="navigation"></i>
+          <span class="tab-main">Chota → Chiclayo</span>
+          <span class="tab-sub">Vía Cutervo · Chiclayo</span>
+        </button>
+      </div>
+
+      <!-- Selector de ciudad de Salida y Llegada -->
+      <div class="selector-card" id="selectorCard">
+        <div class="selector-grid">
+          <div class="selector-group">
+            <label class="selector-label">
+              <i data-lucide="map-pin"></i> Ciudad de Salida
+            </label>
+            <div class="custom-select-wrapper">
+              <select id="ciudadSalida" class="custom-select" onchange="actualizarContacto()">
+                <option value="">— Selecciona ciudad —</option>
+              </select>
+              <i data-lucide="chevron-down" class="select-arrow"></i>
+            </div>
+          </div>
+
+          <div class="selector-arrow-center">
+            <div class="arrow-line"></div>
+            <i data-lucide="arrow-right-circle"></i>
+            <div class="arrow-line"></div>
+          </div>
+
+          <div class="selector-group">
+            <label class="selector-label">
+              <i data-lucide="flag"></i> Ciudad de Llegada
+            </label>
+            <div class="custom-select-wrapper">
+              <select id="ciudadLlegada" class="custom-select" onchange="actualizarContacto()">
+                <option value="">— Selecciona ciudad —</option>
+              </select>
+              <i data-lucide="chevron-down" class="select-arrow"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mapa visual de escalas -->
+        <div class="escalas-visuales" id="escalasVisuales"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       SECCIÓN: RESULTADO DE CONTACTO
+  ====================================================== -->
+  <section class="contacto-section" id="contacto">
+    <div class="container">
+      <!-- Estado inicial: mostrar todas las oficinas -->
+      <div class="section-header">
+        <span class="section-label"><i data-lucide="phone"></i> Contacto Directo</span>
+        <h2 class="section-title" id="contactoTitle">Nuestras Oficinas</h2>
+        <p class="section-subtitle" id="contactoSubtitle">Selecciona una ruta arriba para filtrar las oficinas, o contáctanos directamente:</p>
+      </div>
+
+      <!-- Grid de tarjetas de oficinas -->
+      <div class="oficinas-grid" id="oficinasGrid">
+        <!-- Generado dinámicamente por script.js -->
+      </div>
+
+      <!-- Botón para ver todas las oficinas -->
+      <div class="ver-todas-wrapper" id="verTodasWrapper" style="display:none;">
+        <button class="btn-outline" onclick="mostrarTodasOficinas()">
+          <i data-lucide="list"></i> Ver todas las oficinas
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       SECCIÓN: ENCOMIENDAS
+  ====================================================== -->
+  <section class="encomiendas-section" id="encomiendas">
+    <div class="container">
+      <div class="encomiendas-grid">
+        <div class="encomiendas-info">
+          <span class="section-label light"><i data-lucide="package"></i> Encomiendas</span>
+          <h2 class="section-title light">Envíos Rápidos y Seguros</h2>
+          <p class="encomiendas-desc">
+            Enviamos tus paquetes y mercadería a todas las ciudades de nuestra red.
+            Rapidez, seguridad y precio justo. Tu encomienda llega el mismo día.
+          </p>
+          <ul class="encomiendas-features">
+            <li><i data-lucide="check-circle"></i> Entrega el mismo día en rutas directas</li>
+            <li><i data-lucide="check-circle"></i> Seguimiento en tiempo real vía WhatsApp</li>
+            <li><i data-lucide="check-circle"></i> Tarifas económicas y transparentes</li>
+            <li><i data-lucide="check-circle"></i> Manejo cuidadoso de paquetes frágiles</li>
+          </ul>
+          <div class="encomiendas-actions">
+            <button class="btn-whatsapp-encomienda" id="btnEncomiendaGlobal" onclick="abrirWhatsAppEncomienda()">
+              <i data-lucide="package"></i>
+              Cotizar mi Encomienda
+            </button>
+          </div>
+        </div>
+
+        <div class="encomiendas-visual">
+          <!-- Reemplaza con tu imagen: Fotos/encomiendas.jpg -->
+          <div class="encomienda-img-placeholder">
+            <img src="Fotos/encomiendas.jpg" alt="Servicio de encomiendas" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+            <div class="img-placeholder-fallback" style="display:none;">
+              <i data-lucide="package"></i>
+              <span>Fotos/encomiendas.jpg</span>
+            </div>
+          </div>
+          <!-- Tarjetas flotantes decorativas -->
+          <div class="float-card float-card-1">
+            <i data-lucide="clock"></i>
+            <div>
+              <strong>Mismo Día</strong>
+              <span>Entrega Express</span>
+            </div>
+          </div>
+          <div class="float-card float-card-2">
+            <i data-lucide="shield"></i>
+            <div>
+              <strong>100% Seguro</strong>
+              <span>Garantizado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       SECCIÓN: NOSOTROS / GALERÍA
+  ====================================================== -->
+  <section class="nosotros-section" id="nosotros">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label"><i data-lucide="heart"></i> Nosotros</span>
+        <h2 class="section-title">Empresa con Historia,<br />Servicio con Futuro</h2>
+        <p class="section-subtitle">Años de experiencia conectando las ciudades del norte peruano.</p>
+      </div>
+
+      <!-- Galería de fotos -->
+      <div class="galeria-grid">
+        <!-- Reemplaza las imágenes con tus archivos de la carpeta Fotos/ -->
+        <div class="galeria-item galeria-grande">
+          <img src="Fotos/bus-exterior.jpg" alt="Nuestras unidades" onerror="this.style.display='none'; this.parentElement.querySelector('.galeria-placeholder').style.display='flex'" />
+          <div class="galeria-placeholder" style="display:none;">
+            <i data-lucide="bus"></i>
+            <span>Fotos/bus-exterior.jpg</span>
+          </div>
+          <div class="galeria-overlay"><span>Nuestras Unidades</span></div>
+        </div>
+        <div class="galeria-item">
+          <img src="Fotos/bus-interior.jpg" alt="Interior de bus" onerror="this.style.display='none'; this.parentElement.querySelector('.galeria-placeholder').style.display='flex'" />
+          <div class="galeria-placeholder" style="display:none;">
+            <i data-lucide="armchair"></i>
+            <span>Fotos/bus-interior.jpg</span>
+          </div>
+          <div class="galeria-overlay"><span>Confort Interior</span></div>
+        </div>
+        <div class="galeria-item">
+          <img src="Fotos/oficina-principal.jpg" alt="Oficina principal" onerror="this.style.display='none'; this.parentElement.querySelector('.galeria-placeholder').style.display='flex'" />
+          <div class="galeria-placeholder" style="display:none;">
+            <i data-lucide="building"></i>
+            <span>Fotos/oficina-principal.jpg</span>
+          </div>
+          <div class="galeria-overlay"><span>Oficina Principal</span></div>
+        </div>
+        <div class="galeria-item">
+          <img src="Fotos/paisaje-ruta.jpg" alt="Paisaje de la ruta" onerror="this.style.display='none'; this.parentElement.querySelector('.galeria-placeholder').style.display='flex'" />
+          <div class="galeria-placeholder" style="display:none;">
+            <i data-lucide="mountain"></i>
+            <span>Fotos/paisaje-ruta.jpg</span>
+          </div>
+          <div class="galeria-overlay"><span>Paisajes Únicos</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       FOOTER
+  ====================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <i data-lucide="bus"></i>
+            <span>TransAndino</span>
+          </div>
+          <p>Conectando el norte del Perú con seguridad, puntualidad y calidez humana.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="WhatsApp" class="social-link whatsapp">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h4>Rutas</h4>
+          <ul>
+            <li><a href="#rutas" onclick="seleccionarRutaDirecta('cajamarca-tarapoto')">Cajamarca → Tarapoto</a></li>
+            <li><a href="#rutas" onclick="seleccionarRutaDirecta('tarapoto-chiclayo')">Tarapoto → Chiclayo</a></li>
+            <li><a href="#rutas" onclick="seleccionarRutaDirecta('chota-chiclayo')">Chota → Chiclayo</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Servicios</h4>
+          <ul>
+            <li><a href="#contacto">Pasajes</a></li>
+            <li><a href="#encomiendas">Encomiendas</a></li>
+            <li><a href="#contacto">Oficinas</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contacto">
+          <h4>Contacto Rápido</h4>
+          <p>Selecciona tu ciudad de origen en la sección de rutas para contactar la oficina más cercana.</p>
+          <button class="btn-whatsapp-footer" onclick="abrirWhatsAppGeneral()">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            WhatsApp General
+          </button>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 TransAndino. Todos los derechos reservados.</p>
+        <p>Hecho con ❤️ en el Perú</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================
+       BOTÓN FLOTANTE DE WHATSAPP
+  ====================================================== -->
+  <button class="fab-whatsapp" id="fabWhatsapp" onclick="abrirWhatsAppGeneral()" aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span class="fab-label">¿Necesitas ayuda?</span>
+  </button>
+
+  <!-- Toast de notificación -->
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
