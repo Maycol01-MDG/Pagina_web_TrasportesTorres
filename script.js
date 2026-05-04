@@ -1,319 +1,400 @@
-/* ============================================================
-   TransAndino — Logic & Interactivity
-   ============================================================ */
+const WHATSAPP_GENERAL = "51976877804";
 
-// 1. BASE DE DATOS DE OFICINAS
-const oficinas = [
-  { id: 'chota', nombre: 'Chota', telefono: '51976877804', badge: 'Oficina Principal' },
-  { id: 'cutervo', nombre: 'Cutervo', telefono: '51952117428', badge: 'Agencia' },
-  { id: 'lacapilla', nombre: 'La Capilla', telefono: '51976877804', badge: 'Agencia' },
-  { id: 'baguagrande', nombre: 'Bagua Grande', telefono: '51938965738', badge: 'Terminal' },
-  { id: 'pedroruiz', nombre: 'Pedro Ruiz', telefono: '51976877804', badge: 'Agencia' },
-  { id: 'pomacochas', nombre: 'Pomacochas', telefono: '51952856792', badge: 'Agencia' },
-  { id: 'naranjillo', nombre: 'Naranjillo', telefono: '51975790400', badge: 'Agencia' },
-  { id: 'naranjos', nombre: 'Naranjos', telefono: '51942444294', badge: 'Agencia' },
-  { id: 'nuevacajamarca', nombre: 'Nueva Cajamarca', telefono: '51976877796', badge: 'Terminal' },
-  { id: 'segundajerusalen', nombre: 'Segunda Jerusalén', telefono: '51908970134', badge: 'Agencia' },
-  { id: 'rioja', nombre: 'Rioja', telefono: '51985795520', badge: 'Terminal' },
-  { id: 'moyobamba', nombre: 'Moyobamba', telefono: '51966138011', badge: 'Terminal' },
-  { id: 'tarapoto', nombre: 'Tarapoto', telefono: '51949001436', badge: 'Terminal Terrestre' },
-  { id: 'chiclayo', nombre: 'Chiclayo', telefono: '51978569333', badge: 'Terminal Principal' },
-  { id: 'cajamarca', nombre: 'Cajamarca', telefono: '51976877804', badge: 'Agencia Central' }
-];
-
-// 2. DEFINICIÓN DE RUTAS Y SUS ESCALAS
-const rutasDefinidas = {
-  'cajamarca-tarapoto': [
-    'cajamarca', 'chota', 'cutervo', 'lacapilla', 'baguagrande', 
-    'pedroruiz', 'pomacochas', 'naranjillo', 'naranjos', 
-    'nuevacajamarca', 'segundajerusalen', 'rioja', 'moyobamba', 'tarapoto'
-  ],
-  'tarapoto-chiclayo': [
-    'tarapoto', 'moyobamba', 'rioja', 'segundajerusalen', 'nuevacajamarca', 
-    'naranjos', 'naranjillo', 'pomacochas', 'pedroruiz', 'baguagrande', 'chiclayo'
-  ],
-  'chota-chiclayo': [
-    'chota', 'cutervo', 'chiclayo'
-  ]
+const offices = {
+  Cajamarca: {
+    phone: "51976877804",
+    region: "Cajamarca",
+    label: "Oficina Cajamarca",
+    image: "Fotos/oficina-cajamarca.jpg"
+  },
+  Chota: {
+    phone: "51976877804",
+    region: "Cajamarca",
+    label: "Chota Principal",
+    image: "Fotos/oficina-principal.jpg"
+  },
+  Cochabamba: {
+    phone: "51976877804",
+    region: "Cajamarca",
+    label: "Cochabamba",
+    image: "Fotos/oficina-principal.jpg"
+  },
+  Cutervo: {
+    phone: "51952117428",
+    region: "Cajamarca",
+    label: "Oficina Cutervo",
+    image: "Fotos/oficina-cutervo.jpg"
+  },
+  "La Capilla": {
+    phone: "51976877804",
+    region: "Cajamarca",
+    label: "La Capilla",
+    image: "Fotos/oficina-lacapilla.jpg"
+  },
+  "Bagua Grande": {
+    phone: "51938965738",
+    region: "Amazonas",
+    label: "Oficina Bagua Grande",
+    image: "Fotos/oficina-baguagrande.jpg"
+  },
+  "Pedro Ruiz": {
+    phone: "51976877804",
+    region: "Amazonas",
+    label: "Pedro Ruiz",
+    image: "Fotos/oficina-pedroruiz.jpg"
+  },
+  Pomacochas: {
+    phone: "51952856792",
+    region: "Amazonas",
+    label: "Oficina Pomacochas",
+    image: "Fotos/oficina-pomacochas.jpg"
+  },
+  Naranjillo: {
+    phone: "51975790400",
+    region: "San Martin",
+    label: "Oficina Naranjillo",
+    image: "Fotos/oficina-naranjillo.jpg"
+  },
+  Naranjos: {
+    phone: "51942444294",
+    region: "San Martin",
+    label: "Oficina Naranjos",
+    image: "Fotos/oficina-naranjos.jpg"
+  },
+  "Nueva Cajamarca": {
+    phone: "51976877796",
+    region: "San Martin",
+    label: "Oficina Nueva Cajamarca",
+    image: "Fotos/oficina-nuevacajamarca.jpg"
+  },
+  "Segunda Jerusal\u00e9n": {
+    phone: "51908970134",
+    region: "San Martin",
+    label: "Oficina Segunda Jerusal\u00e9n",
+    image: "Fotos/oficina-segundajerusalen.jpg"
+  },
+  Rioja: {
+    phone: "51985795520",
+    region: "San Martin",
+    label: "Oficina Rioja",
+    image: "Fotos/oficina-rioja.jpg"
+  },
+  Moyobamba: {
+    phone: "51966138011",
+    region: "San Martin",
+    label: "Oficina Moyobamba",
+    image: "Fotos/oficina-moyobamba.jpg"
+  },
+  Tarapoto: {
+    phone: "51949001436",
+    region: "San Martin",
+    label: "Oficina Tarapoto",
+    image: "Fotos/oficina-tarapoto.jpg"
+  },
+  Chiclayo: {
+    phone: "51978569333",
+    region: "Lambayeque",
+    label: "Oficina Chiclayo",
+    image: "Fotos/oficina-chiclayo.jpg"
+  }
 };
 
-let rutaActiva = 'cajamarca-tarapoto';
-
-// 3. INICIALIZACIÓN
-document.addEventListener('DOMContentLoaded', () => {
-  // Inicializar Lucide Icons
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
+const routes = {
+  rutaA: {
+    id: "rutaA",
+    name: "Ruta A",
+    title: "Cajamarca - Tarapoto",
+    detail: "Cajamarca, Chota, Cutervo, Bagua Grande, Moyobamba y Tarapoto (ida y vuelta)",
+    icon: "mountain",
+    cities: [
+      "Cajamarca",
+      "Chota",
+      "Cochabamba",
+      "Cutervo",
+      "La Capilla",
+      "Bagua Grande",
+      "Pedro Ruiz",
+      "Pomacochas",
+      "Naranjillo",
+      "Naranjos",
+      "Nueva Cajamarca",
+      "Segunda Jerusal\u00e9n",
+      "Rioja",
+      "Moyobamba",
+      "Tarapoto"
+    ]
+  },
+  rutaB: {
+    id: "rutaB",
+    name: "Ruta B",
+    title: "Chiclayo - Tarapoto",
+    detail: "Chiclayo, Bagua Grande, Pedro Ruiz, Pomacochas, Nueva Cajamarca, Rioja y Tarapoto (ida y vuelta)",
+    icon: "map",
+    cities: [
+      "Chiclayo",
+      "Bagua Grande",
+      "Pedro Ruiz",
+      "Pomacochas",
+      "Naranjillo",
+      "Naranjos",
+      "Nueva Cajamarca",
+      "Segunda Jerusal\u00e9n",
+      "Rioja",
+      "Moyobamba",
+      "Tarapoto"
+    ]
+  },
+  rutaC: {
+    id: "rutaC",
+    name: "Ruta C",
+    title: "Chota - Chiclayo",
+    detail: "Chota, Cochabamba y Chiclayo (ida y vuelta)",
+    icon: "route",
+    cities: ["Chota", "Cochabamba", "Chiclayo"]
   }
+};
 
-  // Configurar Tabs de Ruta
-  const tabs = document.querySelectorAll('.route-tab');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      rutaActiva = tab.dataset.route;
-      cargarSelectores();
-      actualizarEscalasVisuales();
-      mostrarTodasOficinas(); // Resetear vista de oficinas al cambiar ruta
-    });
-  });
+let activeRouteId = "rutaA";
 
-  // Hamburguesa móvil
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  if (hamburger) {
-    hamburger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-      hamburger.classList.toggle('active');
-    });
-  }
+const els = {};
 
-  // Efecto Navbar Scroll
-  window.addEventListener('scroll', () => {
-    const navbar = document.getElementById('navbar');
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
-
-  // Carga inicial
-  cargarSelectores();
-  actualizarEscalasVisuales();
-  mostrarTodasOficinas();
-  
-  // Observador de revelación al scroll
-  const observerOptions = { threshold: 0.1 };
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, observerOptions);
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.addEventListener("DOMContentLoaded", () => {
+  cacheElements();
+  bindEvents();
+  renderRouteTabs();
+  populateSelects();
+  renderRouteLine();
+  setGlobalWhatsappLinks();
+  refreshIcons();
 });
 
-// 4. LÓGICA DE SELECTORES
-function cargarSelectores() {
-  const selectSalida = document.getElementById('ciudadSalida');
-  const selectLlegada = document.getElementById('ciudadLlegada');
-  const ciudadesRuta = rutasDefinidas[rutaActiva];
+function cacheElements() {
+  els.header = document.getElementById("siteHeader");
+  els.menuToggle = document.getElementById("menuToggle");
+  els.mobileNav = document.getElementById("mobileNav");
+  els.routeTabs = document.getElementById("routeTabs");
+  els.routeForm = document.getElementById("routeForm");
+  els.origin = document.getElementById("originSelect");
+  els.destination = document.getElementById("destinationSelect");
+  els.swap = document.getElementById("swapButton");
+  els.routeLine = document.getElementById("routeLine");
+  els.result = document.getElementById("contactResult");
+  els.headerWhatsapp = document.getElementById("headerWhatsapp");
+  els.footerWhatsapp = document.getElementById("footerWhatsapp");
+  els.floatingWhatsapp = document.getElementById("floatingWhatsapp");
+  els.encomiendaWhatsapp = document.getElementById("encomiendaWhatsapp");
+}
 
-  // Limpiar y cargar Salida
-  selectSalida.innerHTML = '<option value="">— Ciudad de Salida —</option>';
-  ciudadesRuta.forEach(id => {
-    const ciudad = oficinas.find(o => o.id === id);
-    if (ciudad) {
-      const option = document.createElement('option');
-      option.value = id;
-      option.textContent = ciudad.nombre;
-      selectSalida.appendChild(option);
+function bindEvents() {
+  window.addEventListener("scroll", () => {
+    els.header.classList.toggle("is-scrolled", window.scrollY > 24);
+  }, { passive: true });
+
+  els.menuToggle.addEventListener("click", () => {
+    const isOpen = els.mobileNav.classList.toggle("is-open");
+    els.menuToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  els.mobileNav.addEventListener("click", (event) => {
+    if (event.target.matches("a")) {
+      els.mobileNav.classList.remove("is-open");
+      els.menuToggle.setAttribute("aria-expanded", "false");
     }
   });
 
-  // Limpiar y cargar Llegada
-  selectLlegada.innerHTML = '<option value="">— Ciudad de Llegada —</option>';
-  ciudadesRuta.forEach(id => {
-    const ciudad = oficinas.find(o => o.id === id);
-    if (ciudad) {
-      const option = document.createElement('option');
-      option.value = id;
-      option.textContent = ciudad.nombre;
-      selectLlegada.appendChild(option);
-    }
+  els.origin.addEventListener("change", handleSelectionChange);
+  els.destination.addEventListener("change", handleSelectionChange);
+  els.swap.addEventListener("click", swapCities);
+  els.routeForm.addEventListener("submit", (event) => event.preventDefault());
+}
+
+function renderRouteTabs() {
+  els.routeTabs.innerHTML = Object.values(routes).map((route) => `
+    <button class="route-tab route-tab--${route.id} ${route.id === activeRouteId ? "is-active" : ""}" type="button" data-route="${route.id}" aria-pressed="${route.id === activeRouteId}">
+      <span class="route-icon"><i data-lucide="${route.icon || "bus-front"}"></i></span>
+      <span>
+        <strong>${route.name}: ${route.title}</strong>
+        <span>${route.detail}</span>
+      </span>
+    </button>
+  `).join("");
+
+  els.routeTabs.querySelectorAll("[data-route]").forEach((button) => {
+    button.addEventListener("click", () => {
+      activeRouteId = button.dataset.route;
+      populateSelects();
+      renderRouteTabs();
+      renderRouteLine();
+      hideResult();
+      refreshIcons();
+    });
   });
 }
 
-// 5. ACTUALIZAR CONTACTO
-function actualizarContacto() {
-  const salidaId = document.getElementById('ciudadSalida').value;
-  const llegadaId = document.getElementById('ciudadLlegada').value;
-  const grid = document.getElementById('oficinasGrid');
-  const title = document.getElementById('contactoTitle');
-  const subtitle = document.getElementById('contactoSubtitle');
-  const verTodasBtn = document.getElementById('verTodasWrapper');
-
-  actualizarEscalasVisuales();
-
-  if (!salidaId || !llegadaId) {
-    if (!salidaId && !llegadaId) mostrarTodasOficinas();
-    return;
-  }
-
-  if (salidaId === llegadaId) {
-    mostrarToast("La ciudad de salida y llegada no pueden ser la misma.");
-    document.getElementById('ciudadLlegada').value = "";
-    return;
-  }
-
-  // Filtrar oficinas relevantes (la de salida y la de llegada)
-  const oficinaSalida = oficinas.find(o => o.id === salidaId);
-  const oficinaLlegada = oficinas.find(o => o.id === llegadaId);
-
-  title.textContent = "Oficinas para tu Viaje";
-  subtitle.textContent = `Mostrando contactos para la ruta ${oficinaSalida.nombre} → ${oficinaLlegada.nombre}`;
-  verTodasBtn.style.display = 'block';
-
-  grid.innerHTML = "";
-  
-  // Renderizar primero la de salida (prioridad)
-  renderOficinaCard(oficinaSalida, "Salida", true);
-  renderOficinaCard(oficinaLlegada, "Llegada", false);
-
-  // Scroll suave a los resultados
-  scrollToSection('contacto');
+function populateSelects() {
+  const route = routes[activeRouteId];
+  const options = route.cities.map((city) => `<option value="${city}">${city}</option>`).join("");
+  els.origin.innerHTML = `<option value="">Selecciona origen</option>${options}`;
+  els.destination.innerHTML = `<option value="">Selecciona destino</option>${options}`;
 }
 
-// 6. RENDERIZAR TARJETA DE OFICINA
-function renderOficinaCard(oficina, tipo, isHighlighted) {
-  const grid = document.getElementById('oficinasGrid');
-  const card = document.createElement('div');
-  card.className = `oficina-card ${isHighlighted ? 'highlighted' : ''}`;
-  
-  const msgPasajes = `Hola, quiero información sobre pasajes desde ${oficina.nombre}.`;
-  const msgEncomienda = `Hola, quiero cotizar el envío de una encomienda desde ${oficina.nombre}.`;
+function handleSelectionChange() {
+  const origin = els.origin.value;
+  const destination = els.destination.value;
+  renderRouteLine(origin, destination);
 
-  card.innerHTML = `
-    <div class="oficina-header">
-      <div class="oficina-icon">
-        <i data-lucide="${tipo === 'Salida' ? 'map-pin' : 'flag'}"></i>
-      </div>
-      <div class="oficina-info">
-        <span class="oficina-badge">${tipo} • ${oficina.badge}</span>
-        <h3 class="oficina-ciudad">${oficina.nombre}</h3>
-        <div class="oficina-telefono">
-          <i data-lucide="phone"></i>
-          <span>+${oficina.telefono.replace(/(\d{2})(\d{3})(\d{3})(\d{3})/, '$1 $2 $3 $4')}</span>
+  if (!origin || !destination || origin === destination) {
+    hideResult();
+    return;
+  }
+
+  renderContactResult(origin, destination);
+}
+
+function swapCities() {
+  const origin = els.origin.value;
+  const destination = els.destination.value;
+  els.origin.value = destination;
+  els.destination.value = origin;
+  handleSelectionChange();
+}
+
+function renderRouteLine(origin = "", destination = "") {
+  const route = routes[activeRouteId];
+  const originIndex = route.cities.indexOf(origin);
+  const destinationIndex = route.cities.indexOf(destination);
+  const hasSegment = originIndex >= 0 && destinationIndex >= 0 && origin !== destination;
+  const start = hasSegment ? Math.min(originIndex, destinationIndex) : -1;
+  const end = hasSegment ? Math.max(originIndex, destinationIndex) : -1;
+
+  els.routeLine.innerHTML = route.cities.map((city, index) => {
+    const selected = city === origin || city === destination;
+    const between = hasSegment && index > start && index < end;
+    return `<span class="route-stop ${selected ? "is-selected" : ""} ${between ? "is-between" : ""}">${city}</span>`;
+  }).join("");
+}
+
+function renderContactResult(origin, destination) {
+  const route = routes[activeRouteId];
+  const originIndex = route.cities.indexOf(origin);
+  const destinationIndex = route.cities.indexOf(destination);
+  const segmentCities = getSegmentCities(route.cities, originIndex, destinationIndex);
+  const contactCities = unique([origin, destination]);
+  const routeText = `${origin} - ${destination}`;
+  const directionText = originIndex <= destinationIndex ? "ida" : "vuelta";
+
+  const officeRows = contactCities.map((city) => {
+    const office = offices[city];
+    const passengerLink = makeWhatsappLink(
+      office.phone,
+      buildPassengerMessage(route, directionText, origin, destination, segmentCities)
+    );
+    const parcelLink = makeWhatsappLink(
+      office.phone,
+      buildParcelMessage(route, directionText, origin, destination, segmentCities)
+    );
+
+    return `
+      <article class="office-row">
+        <div class="office-top">
+          <img src="${office.image}" alt="${office.label}" />
+          <div>
+            <strong>${city}</strong>
+            <span>${office.label} - ${office.region}</span>
+            <span class="office-phone"><i data-lucide="phone"></i>${formatPhone(office.phone)}</span>
+          </div>
         </div>
+        <div class="office-actions">
+          <a class="passenger-link" href="${passengerLink}" target="_blank" rel="noopener noreferrer">
+            <i data-lucide="message-circle"></i>
+            Pasajeros
+          </a>
+          <a class="parcel-link" href="${parcelLink}" target="_blank" rel="noopener noreferrer">
+            <i data-lucide="package"></i>
+            Encomiendas
+          </a>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  els.result.hidden = false;
+  els.result.innerHTML = `
+    <div class="contact-shell">
+      <div class="contact-head">
+        <span>${route.name}</span>
+        <h3>${routeText}</h3>
       </div>
-    </div>
-    <div class="oficina-actions">
-      <button class="btn-whatsapp" onclick="abrirWA('${oficina.telefono}', '${msgPasajes}')">
-        <i data-lucide="message-circle"></i> WhatsApp Pasajes
-      </button>
-      <button class="btn-encomienda-card" onclick="abrirWA('${oficina.telefono}', '${msgEncomienda}')">
-        <i data-lucide="package"></i> Encomiendas
-      </button>
+      <div class="office-list">${officeRows}</div>
+      <p class="route-note">
+        Tramo seleccionado: ${segmentCities.join(" / ")}.
+      </p>
     </div>
   `;
-
-  grid.appendChild(card);
-  if (typeof lucide !== 'undefined') lucide.createIcons();
+  setEncomiendaWhatsapp(origin, destination);
+  refreshIcons();
 }
 
-// 7. MOSTRAR TODAS LAS OFICINAS
-function mostrarTodasOficinas() {
-  const grid = document.getElementById('oficinasGrid');
-  const title = document.getElementById('contactoTitle');
-  const subtitle = document.getElementById('contactoSubtitle');
-  const verTodasBtn = document.getElementById('verTodasWrapper');
-
-  title.textContent = "Nuestras Oficinas";
-  subtitle.textContent = "Contáctanos directamente en cualquiera de nuestras sedes:";
-  verTodasBtn.style.display = 'none';
-  grid.innerHTML = "";
-
-  // Filtrar oficinas que pertenecen a la ruta activa o todas si se prefiere
-  const ciudadesRuta = rutasDefinidas[rutaActiva];
-  
-  oficinas.forEach(oficina => {
-    // Solo mostrar las de la ruta actual para mantener relevancia
-    if (ciudadesRuta.includes(oficina.id)) {
-      renderOficinaCard(oficina, "Sede", false);
-    }
-  });
+function hideResult() {
+  els.result.hidden = true;
+  els.result.innerHTML = "";
+  setEncomiendaWhatsapp();
 }
 
-// 8. ESCALAS VISUALES (MAPA DE RUTA)
-function actualizarEscalasVisuales() {
-  const container = document.getElementById('escalasVisuales');
-  const ciudadesRuta = rutasDefinidas[rutaActiva];
-  const salidaId = document.getElementById('ciudadSalida').value;
-  const llegadaId = document.getElementById('ciudadLlegada').value;
-
-  container.innerHTML = "";
-  const track = document.createElement('div');
-  track.className = 'escalas-track';
-
-  ciudadesRuta.forEach((id, index) => {
-    const ciudad = oficinas.find(o => o.id === id);
-    const isSalida = id === salidaId;
-    const isLlegada = id === llegadaId;
-    
-    // Punto
-    const punto = document.createElement('div');
-    punto.className = 'escala-punto';
-    
-    const dot = document.createElement('div');
-    dot.className = `escala-dot ${isSalida ? 'origin' : ''} ${isLlegada ? 'destino' : ''}`;
-    
-    const nombre = document.createElement('div');
-    nombre.className = `escala-nombre ${isSalida ? 'origin' : ''} ${isLlegada ? 'destino' : ''}`;
-    nombre.textContent = ciudad.nombre;
-
-    punto.appendChild(dot);
-    punto.appendChild(nombre);
-    track.appendChild(punto);
-
-    // Línea conector
-    if (index < ciudadesRuta.length - 1) {
-      const linea = document.createElement('div');
-      linea.className = 'escala-linea';
-      track.appendChild(linea);
-    }
-  });
-
-  container.appendChild(track);
+function getSegmentCities(cities, originIndex, destinationIndex) {
+  if (originIndex < 0 || destinationIndex < 0) return [];
+  const start = Math.min(originIndex, destinationIndex);
+  const end = Math.max(originIndex, destinationIndex);
+  const segment = cities.slice(start, end + 1);
+  return originIndex > destinationIndex ? segment.reverse() : segment;
 }
 
-// 9. FUNCIONES DE UTILIDAD
-function abrirWA(tel, msg) {
-  const url = `https://wa.me/${tel}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
+function setGlobalWhatsappLinks() {
+  const general = makeWhatsappLink(
+    WHATSAPP_GENERAL,
+    "Hola, deseo informacion de rutas, horarios y tarifas de Transportes Torres."
+  );
+  els.headerWhatsapp.href = general;
+  els.footerWhatsapp.href = general;
+  els.floatingWhatsapp.href = general;
+  setEncomiendaWhatsapp();
 }
 
-function abrirWhatsAppGeneral() {
-  abrirWA('51976877804', 'Hola TransAndino, necesito información general sobre sus servicios.');
+function setEncomiendaWhatsapp(origin = "", destination = "") {
+  const phone = origin && offices[origin] ? offices[origin].phone : WHATSAPP_GENERAL;
+  const route = routes[activeRouteId];
+  const routeText = origin && destination ? `${origin} - ${destination}` : route.title;
+  const directionText = origin && destination
+    ? (route.cities.indexOf(origin) <= route.cities.indexOf(destination) ? "ida" : "vuelta")
+    : "ida o vuelta";
+  els.encomiendaWhatsapp.href = makeWhatsappLink(
+    phone,
+    `Hola Transportes Torres, deseo cotizar una encomienda en la ruta ${routeText} (${directionText}).`
+  );
 }
 
-function abrirWhatsAppEncomienda() {
-  abrirWA('51976877804', 'Hola, quiero información para enviar una encomienda.');
+function buildPassengerMessage(route, directionText, origin, destination, segmentCities) {
+  return `Hola Transportes Torres, quiero viajar en la ruta ${route.title}, tramo ${origin} -> ${destination}. Me comparten horario de salida, precio y disponibilidad, por favor.`;
 }
 
-function scrollToSection(id) {
-  const el = document.getElementById(id);
-  if (el) {
-    const offset = 80; // Altura del navbar
-    const bodyRect = document.body.getBoundingClientRect().top;
-    const elementRect = el.getBoundingClientRect().top;
-    const elementPosition = elementRect - bodyRect;
-    const offsetPosition = elementPosition - offset;
+function buildParcelMessage(route, directionText, origin, destination, segmentCities) {
+  return `Hola Transportes Torres, deseo enviar una encomienda en la ruta ${route.title}, tramo ${origin} -> ${destination}. Me indican tarifa, horarios y tiempo estimado de entrega, por favor.`;
+}
 
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    });
+function makeWhatsappLink(phone, message) {
+  return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+}
+
+function formatPhone(phone) {
+  return `+${phone.slice(0, 2)} ${phone.slice(2, 5)} ${phone.slice(5, 8)} ${phone.slice(8)}`;
+}
+
+function unique(items) {
+  return [...new Set(items.filter(Boolean))];
+}
+
+function refreshIcons() {
+  if (window.lucide) {
+    window.lucide.createIcons();
   }
-}
-
-function closeMobileMenu() {
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.getElementById('hamburger').classList.remove('active');
-}
-
-function seleccionarRutaDirecta(rutaId) {
-  const tab = document.querySelector(`.route-tab[data-route="${rutaId}"]`);
-  if (tab) tab.click();
-  scrollToSection('rutas');
-}
-
-function mostrarToast(mensaje) {
-  const toast = document.getElementById('toast');
-  toast.textContent = mensaje;
-  toast.classList.add('visible');
-  setTimeout(() => toast.classList.remove('visible'), 4000);
 }
