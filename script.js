@@ -398,3 +398,27 @@ function refreshIcons() {
     window.lucide.createIcons();
   }
 }
+
+/* ── Scroll Reveal ─────────────────────────────────────────── */
+function initScrollReveal() {
+  const targets = document.querySelectorAll(
+    ".route-tab, .video-card, .gallery-item, .encomienda-copy, .encomienda-media, .section-heading, .route-header"
+  );
+  targets.forEach(el => el.classList.add("reveal"));
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add("visible"), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+
+  targets.forEach(el => observer.observe(el));
+}
+
+document.addEventListener("DOMContentLoaded", initScrollReveal);
