@@ -158,6 +158,13 @@ let activeRouteId = "rutaA";
 
 const els = {};
 
+/* ── Utilidades ─────────────────────────────────────────────── */
+function vibrate(duration = 50) {
+  if (navigator.vibrate) {
+    navigator.vibrate(duration);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   cacheElements();
   bindEvents();
@@ -204,7 +211,10 @@ function bindEvents() {
 
   els.origin.addEventListener("change", handleSelectionChange);
   els.destination.addEventListener("change", handleSelectionChange);
-  els.swap.addEventListener("click", swapCities);
+  els.swap.addEventListener("click", () => {
+    vibrate(50);
+    swapCities();
+  });
   els.routeForm.addEventListener("submit", (event) => event.preventDefault());
 }
 
@@ -333,6 +343,11 @@ function renderContactResult(origin, destination) {
   `;
   setEncomiendaWhatsapp(origin, destination);
   refreshIcons();
+  
+  // Auto-scroll al resultado
+  setTimeout(() => {
+    els.result.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 200);
 }
 
 function hideResult() {
@@ -352,7 +367,7 @@ function getSegmentCities(cities, originIndex, destinationIndex) {
 function setGlobalWhatsappLinks() {
   const general = makeWhatsappLink(
     WHATSAPP_GENERAL,
-    "Hola, deseo informacion de rutas, horarios y tarifas de Transportes Torres."
+    "Hola Transportes Torres, deseo informacion URGENTE sobre rutas, horarios, tarifas y disponibilidad de asientos."
   );
   els.headerWhatsapp.href = general;
   els.footerWhatsapp.href = general;
@@ -369,16 +384,16 @@ function setEncomiendaWhatsapp(origin = "", destination = "") {
     : "ida o vuelta";
   els.encomiendaWhatsapp.href = makeWhatsappLink(
     phone,
-    `Hola Transportes Torres, deseo cotizar una encomienda en la ruta ${routeText} (${directionText}).`
+    `Hola Transportes Torres, necesito COTIZAR y ENVIAR una encomienda EN SEGUIDA en la ruta ${routeText} (${directionText}). ¿Tarifa y horarios disponibles ahora?`
   );
 }
 
 function buildPassengerMessage(route, directionText, origin, destination, segmentCities) {
-  return `Hola Transportes Torres, quiero viajar en la ruta ${route.title}, tramo ${origin} -> ${destination}. Me comparten horario de salida, precio y disponibilidad, por favor.`;
+  return `Hola Transportes Torres, quiero RESERVAR un asiento AHORA en la ruta ${route.title}, tramo ${origin} → ${destination} (${directionText}). Necesito horario de salida, precio y disponibilidad urgente, porfa.`;
 }
 
 function buildParcelMessage(route, directionText, origin, destination, segmentCities) {
-  return `Hola Transportes Torres, deseo enviar una encomienda en la ruta ${route.title}, tramo ${origin} -> ${destination}. Me indican tarifa, horarios y tiempo estimado de entrega, por favor.`;
+  return `Hola Transportes Torres, necesito ENVIAR una encomienda URGENTE en la ruta ${route.title}, tramo ${origin} → ${destination}. ¿Cuál es la tarifa, horarios y tiempo de entrega? Contéstame rápido.`;
 }
 
 function makeWhatsappLink(phone, message) {

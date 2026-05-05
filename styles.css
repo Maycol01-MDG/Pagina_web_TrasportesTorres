@@ -63,6 +63,7 @@ body {
   color: var(--white);
   background: var(--navy);
   overflow-x: hidden;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="%23025a9a" stroke-width="2"><circle cx="12" cy="12" r="1"/></svg>') 12 12, auto;
 }
 
 img, video { display: block; max-width: 100%; }
@@ -995,6 +996,203 @@ h1 {
   0%   { opacity: 0.70; transform: scale(1); }
   70%  { opacity: 0;    transform: scale(1.18); }
   100% { opacity: 0;    transform: scale(1.18); }
+}
+
+/* ── ANIMACIONES MEJORADAS ──────────────────────────────────── */
+
+/* Animación hero entrada */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulso suave para urgencia */
+@keyframes pulseSoft {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+}
+
+/* Glow dinámico */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.30);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(37, 211, 102, 0.50);
+  }
+}
+
+/* Slide in desde izquierda */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animaciones en hero */
+h1 {
+  animation: fadeUp 1s ease-out;
+}
+
+.hero-copy {
+  animation: fadeUp 1.2s ease-out;
+}
+
+.hero-actions {
+  animation: fadeUp 1.4s ease-out;
+}
+
+/* Sección urgencia */
+.urgency-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(37, 211, 102, 0.15);
+  border: 1px solid rgba(37, 211, 102, 0.36);
+  color: #25D366;
+  font-size: 0.80rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  animation: pulseSoft 2s ease-in-out infinite;
+  margin: 12px 0;
+}
+
+/* Sección testimonios */
+.testimonials {
+  width: min(100%, 920px);
+  margin: 0 auto;
+  padding: 60px 22px;
+  text-align: center;
+  background: rgba(3, 42, 82, 0.50);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(37, 211, 102, 0.20);
+}
+
+.testimonials h3 {
+  font-size: clamp(1.8rem, 6vw, 2.8rem);
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.testimonials-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 900;
+  color: #25D366;
+}
+
+.stat-label {
+  font-size: 0.88rem;
+  color: var(--white-70);
+  margin-top: 4px;
+}
+
+/* Botones con efecto brillo premium */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.30), transparent);
+  transform: translateX(-100%);
+  transition: none;
+}
+
+.btn-primary:hover::before {
+  transform: translateX(100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.12);
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.50);
+}
+
+/* Rutas con animación mejorada */
+.route-stop {
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.route-stop.is-selected {
+  animation: slideInLeft 0.4s ease-out;
+}
+
+/* Galería con glow dinámico */
+.gallery-item:hover {
+  box-shadow: 0 0 30px rgba(34, 211, 238, 0.40);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+
+/* Video cards con efecto mejorado */
+.video-card:hover {
+  box-shadow: 0 20px 60px rgba(37, 211, 102, 0.25);
+}
+
+/* Botón flotante WhatsApp con pulso */
+.floating-whatsapp {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+.floating-whatsapp:hover {
+  animation: none;
+}
+
+/* Encomienda botón especial */
+#encomiendaWhatsapp {
+  transition: all 0.3s ease;
+}
+
+#encomiendaWhatsapp:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+/* Efecto hover en rutas */
+.route-tab {
+  transition: all 0.3s ease;
+}
+
+.route-tab:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.30);
 }
 
 /* ── RESPONSIVE 680px ───────────────────────────────────────── */
